@@ -1,9 +1,0 @@
----
-- name: Install Python
-  hosts: ec2
-  become: yes
-  tasks:
-    - name: Install Python
-      package:
-        name: python
-        state: present
