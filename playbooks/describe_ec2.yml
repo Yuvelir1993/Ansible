@@ -2,9 +2,27 @@
 - hosts: all
   become: yes
   tasks:
-    - name: Get hostname
-      command: echo {{ ansible_hostname.split('-')[1] }}
-      register: hostname
-    - name: Print output
+    - name: Check if Python is installed
+      command: which python
+      register: python_installed
+      ignore_errors: yes
+
+    - name: Get Python version (if installed)
+      command: python3 --version
+      register: python_version
+      when: python_installed.rc == 0
+      ignore_errors: yes
+
+    - name: Print Python installation status and version
       debug:
-        var: result
+        msg: >
+          {% if python_installed.rc == 0 %}
+            Python is installed at {{ python_installed.stdout }}.
+            {% if python_version.stdout != "" %}
+              Python version is {{ python_version.stdout }}.
+            {% else %}
+              Could not determine Python version.
+            {% endif %}
+          {% else %}
+            Python is not installed.
+          {% endif %}
