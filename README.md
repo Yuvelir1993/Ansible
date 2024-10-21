@@ -7,6 +7,9 @@ Ansible repo.
 [Using Ansible Dynamic Inventory to Provision EC2-Instance & Configure Apache Webserver with Handler support!](https://harshitdawar.medium.com/leveraging-the-power-of-the-ansible-dynamic-inventory-to-provision-ec2-instance-configure-apache-664a3e16a7c1)
 
 # Commands
+## Hints
+Use `--step` flag to execute with prompts.
+Use `--tags <tag>` to execute only tagged.
 
 ## Play playbook
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
