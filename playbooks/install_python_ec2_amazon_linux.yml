@@ -1,7 +1,7 @@
 ---
 - name: Check and install the desired Python version on Amazon Linux
   hosts: all
-  gather_facts: false
+  gather_facts: true
   vars:
     python_desired_version: "3.8.16"
 
@@ -10,24 +10,29 @@
       raw: python3 --version
       register: python_version_check
       ignore_errors: true
+      tags: python
 
     - name: Print the result of Python version check
       debug:
         msg: "Python version check output: {{ python_version_check.stdout }}"
+      tags: python
 
     - name: Set variable to indicate if the desired Python version is installed
       set_fact:
         python_is_installed: "{{ 'Python ' ~ python_desired_version in (python_version_check.stdout | trim) }}"
+      tags: python
 
     - name: Log whether the desired Python version is installed
       debug:
         msg: "Is Python {{ python_desired_version }} installed? {{ python_is_installed }}"
+      tags: python
 
     - name: Remove existing Python 3.x version if the desired version is not installed
       raw: |-
         sudo yum remove -y python3
       become: true
       when: not python_is_installed
+      tags: python
 
     - name: Install Python {{ python_desired_version }} using amazon-linux-extras if not installed
       raw: |-
@@ -36,26 +41,30 @@
         sudo yum install -y python3.8
       become: true
       when: not python_is_installed
+      tags: python
 
     - name: Create symlink for python3 to point to python3.8 if not installed
       raw: |-
         sudo ln -sf /usr/bin/python3.8 /usr/bin/python3
       become: true
       when: not python_is_installed
+      tags: python
 
     - name: Create symlink for pydoc to point to pydoc3.8 if not installed
       raw: |-
         sudo ln -sf /usr/bin/pydoc3.8 /usr/bin/pydoc
       become: true
       when: not python_is_installed
+      tags: python
 
     - name: Gather facts after Python installation
       ansible.builtin.setup:
       when: not python_is_installed
+      tags: python
 
 - name: Back to normal life with ansible
   hosts: all
-  gather_facts: true # Ensure facts are gathered for further tasks
+  gather_facts: true
 
   tasks:
     - name: Now we gathered facts and we can use all facts vars

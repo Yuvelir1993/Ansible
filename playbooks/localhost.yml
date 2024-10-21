@@ -1,0 +1,9 @@
+---
+- name: Localhost playbook
+  hosts: localhost
+
+  tasks:
+    - name: Describe localhost
+      debug:
+        var: hostvars[inventory_hostname]
+        verbosity: 1
