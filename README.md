@@ -8,6 +8,7 @@ Ansible repo.
 
 # Commands
 ## Hints
+Use `--check` for validation.
 Use `--step` flag to execute with prompts.
 Use `--tags <tag>` to execute only tagged.
 Use `-e <variable>` to pass variable value.
