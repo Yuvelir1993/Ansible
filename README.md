@@ -15,3 +15,7 @@ Use `-e <variable>` to pass variable value.
 ## Play playbook
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
 `ansible-playbook ./playbooks/install_python_ec2_amazon_linux.yml -i ./inventory/ec2.yml`
+
+## List inventories
+Will call AWS API to return available hosts.
+`ansible-inventory ./inventory/ec2.yml --list`
