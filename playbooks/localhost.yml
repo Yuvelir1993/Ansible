@@ -8,3 +8,17 @@
       debug:
         var: hostvars[inventory_hostname]
         verbosity: 1
+
+    - name: Update all packages to their latest version
+      become: true
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+      register: update_result
+      tags: update
+
+    - name: Report packages updated
+      debug:
+        msg: "Packages updated: {{ update_result.results | selectattr('changed', 'equalto', true) | map(attribute='item') | list }}"
+      when: update_result.changed
+      tags: update

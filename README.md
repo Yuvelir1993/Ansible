@@ -11,6 +11,7 @@ Ansible repo.
 Use `--step` flag to execute with prompts.
 Use `--tags <tag>` to execute only tagged.
 Use `-e <variable>` to pass variable value.
+Use `--ask-become-pass` to explicitly provide sudo password when `become: true`.
 
 ## Play playbook
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
