@@ -20,4 +20,4 @@ Do not use `sudo` since `become: true` automatically elevates needed permissions
 
 ## List inventories
 Will call AWS API to return available hosts.
-`ansible-inventory ./inventory/ec2.yml --list`
+`ansible-inventory -i ./inventory/all_ec2.aws_ec2.yml --list`
